@@ -1,0 +1,6 @@
+Bootstrap: docker-archive
+From: lolcow.docker.tar
+
+%files
+    passwd /etc
+    group /etc
