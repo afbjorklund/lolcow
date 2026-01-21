@@ -1,4 +1,4 @@
 FROM busybox:glibc
 ADD lolcow.tar /bin/
 ENV LC_ALL=C
-ENTRYPOINT date | cowsay | lolcat
+ENTRYPOINT ["sh", "-c", "date | cowsay | lolcat"]
