@@ -43,9 +43,9 @@ lolcow.docker.tar: $(DOCKERFILE) lolcow.tar
 	$(DOCKER) build -t $(IMAGE) -f $< .
 	$(DOCKER) save $(IMAGE) >$@
 
-lolcow.sif: lolcow.docker.tar
+lolcow.sif: $(APPTAINERFILE) lolcow.docker.tar
 	MKSQUASHFS_ARGS="-comp zstd -Xcompression-level 9" \
-	apptainer build $@ $(APPTAINERFILE)
+	apptainer build $@ $<
 
 .PHONY: clean
 clean:
