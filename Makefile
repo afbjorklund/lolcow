@@ -21,6 +21,9 @@ IMAGE = lolcow:latest
 DOCKERFILE = Dockerfile
 APPTAINERFILE = Apptainer
 
+PLATFORM = --platform linux/amd64
+ARCHFLAG = --arch amd64
+
 ifeq ($(SCRATCH),true)
 IMAGE = lolcow:scratch
 DOCKERFILE = Dockerfile.scratch
@@ -40,12 +43,12 @@ lolcow.tar: lolcow endate cowsay lolcat
 	$(TAR) cf $@ $^
 
 lolcow.docker.tar: $(DOCKERFILE) lolcow.tar
-	$(DOCKER) build -t $(IMAGE) -f $< .
+	$(DOCKER) build $(PLATFORM) -t $(IMAGE) -f $< .
 	$(DOCKER) save $(IMAGE) >$@
 
 lolcow.sif: $(APPTAINERFILE) lolcow.docker.tar
 	MKSQUASHFS_ARGS="-comp zstd -Xcompression-level 9" \
-	apptainer build $@ $<
+	apptainer build $(ARCHFLAG) $@ $<
 
 .PHONY: clean
 clean:
