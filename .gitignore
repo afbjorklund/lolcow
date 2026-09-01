@@ -5,3 +5,8 @@ cowsay
 lolcat
 *.tar
 *.sif
+
+
+# Added by cargo
+
+/target
